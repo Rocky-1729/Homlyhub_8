@@ -5,7 +5,7 @@ import "../../css/Home.css";
 
 import { useDispatch } from "react-redux";
 import { propertyActions } from "../../store/property/property-slice";
-import { getAllProperties } from "../../store/Property/property-action";
+import { getAllProperties } from "../../store/property/property-action";
 
 const Search = () => {
   const { RangePicker } = DatePicker;

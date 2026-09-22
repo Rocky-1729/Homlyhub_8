@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/User/User-action.js";
 import toast from "react-hot-toast";
 import { propertyActions } from "../../store/property/property-slice";
-import { getAllProperties } from "../../store/Property/property-action";
+import { getAllProperties } from "../../store/property/property-action";
 import "../../css/AiTripPlanner.css";
 
 const Header = () => {
@@ -57,9 +57,7 @@ const Header = () => {
             <span className="material-symbols-outlined web_logo">
               account_circle
             </span>
-            <span className="login-tip-text">
-              Sign in
-            </span>
+            <span className="login-tip-text">Sign in</span>
           </Link>
         )}
         {isAuthenticated && user && (
