@@ -58,7 +58,7 @@ const Header = () => {
               account_circle
             </span>
             <span className="login-tip-text">
-              You are not logged in. Please login
+              Sign in
             </span>
           </Link>
         )}

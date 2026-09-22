@@ -9,32 +9,46 @@ const NotFound = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        minHeight: "calc(100vh - 12rem)",
+        padding: "4rem 1.5rem",
         textAlign: "center",
-        backgroundColor: "#f8f9fa",
-        color: "#212529",
-        fontFamily: "Inter, sans-serif",
+        backgroundColor: "var(--bg-main)",
+        color: "var(--text-primary)",
+        fontFamily: "inherit",
       }}
     >
-      <h1 style={{ fontSize: "4rem", margin: "0" }}>404</h1>
-      <h2 style={{ fontSize: "1.5rem", margin: "1rem 0" }}>Page Not Found</h2>
-      <p style={{ fontSize: "1rem", maxWidth: "400px", lineHeight: "1.5" }}>
-        Oops! The page you are looking for might have been removed, had its name
-        changed, or is temporarily unavailable.
+      <span
+        className="material-symbols-outlined"
+        style={{ fontSize: "4.5rem", color: "var(--primary)", marginBottom: "1rem" }}
+      >
+        travel_explore
+      </span>
+      <h1 style={{ fontSize: "3.5rem", fontWeight: 800, margin: "0", letterSpacing: "-0.03em" }}>404</h1>
+      <h2 style={{ fontSize: "1.35rem", fontWeight: 700, margin: "0.5rem 0 1rem" }}>Page Not Found</h2>
+      <p style={{ fontSize: "0.95rem", maxWidth: "420px", lineHeight: "1.6", color: "var(--text-secondary)", margin: "0 0 1.5rem" }}>
+        We couldn't find the page you're looking for. It might have been moved or doesn't exist anymore.
       </p>
       <Link
         to="/"
         style={{
-          marginTop: "1.5rem",
-          padding: "0.75rem 1.5rem",
-          backgroundColor: "#0e8b53",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "0.5rem",
+          padding: "0.75rem 1.75rem",
+          backgroundColor: "var(--primary)",
           color: "#fff",
           textDecoration: "none",
-          borderRadius: "0.5rem",
-          transition: "background-color 0.3s ease",
+          borderRadius: "var(--radius-full)",
+          fontWeight: 600,
+          fontSize: "0.95rem",
+          boxShadow: "0 4px 14px rgba(14, 139, 83, 0.3)",
+          transition: "all var(--transition-fast)",
         }}
       >
-        Go to Homepage
+        <span className="material-symbols-outlined" style={{ fontSize: "1.1rem" }}>
+          arrow_back
+        </span>
+        Return to Home
       </Link>
     </div>
   );

@@ -11,7 +11,7 @@ const FilterModal = ({ selectedFilters, onFilterChange, onClose }) => {
   });
 
   const [propertyType, setPropertyType] = useState(
-    selectedFilters.propertyType || ""
+    selectedFilters.propertyType || "",
   );
 
   const [roomType, setRoomType] = useState(selectedFilters.roomType || "");
@@ -48,35 +48,34 @@ const FilterModal = ({ selectedFilters, onFilterChange, onClose }) => {
   };
 
   const handleFilterChange = () => {
-    onFilterChange("minPrice", priceRange.min);
-    onFilterChange("maxPrice", priceRange.max);
-    onFilterChange("propertyType", propertyType);
-    onFilterChange("roomType", roomType);
-    onFilterChange(
-      "amenities",
-      amenities.map((a) => a)
-    );
+    onFilterChange({
+      minPrice: priceRange.min,
+      maxPrice: priceRange.max,
+      propertyType,
+      roomType,
+      amenities,
+    });
 
     onClose();
   };
 
   const propertyTypeOptions = [
-    { value: "house", label: "House", icon: "home" },
-    { value: "flat", label: "Flat", icon: "apartment" },
-    { value: "guest-house", label: "Guest House", icon: "hotel" },
-    { value: "hotel", label: "Hotel", icon: "meeting_room" },
+    { value: "House", label: "House", icon: "home" },
+    { value: "Flat", label: "Flat", icon: "apartment" },
+    { value: "Guest House", label: "Guest House", icon: "hotel" },
+    { value: "Hotel", label: "Hotel", icon: "meeting_room" },
   ];
 
   const roomTypeOptions = [
-    { value: "Entire Home", label: "Entire Home", icon: "hotel" },
-    { value: "Room", label: "Room", icon: "meeting_room" },
-    { value: "Anytype", label: "Any Type", icon: "apartment" },
+    { value: "entire", label: "Entire Home", icon: "hotel" },
+    { value: "Single", label: "Room", icon: "meeting_room" },
+    { value: "", label: "Any Type", icon: "apartment" },
   ];
 
   const amenitiesOptions = [
     { value: "Wifi", label: "Wi-Fi", icon: "wifi" },
     { value: "Kitchen", label: "Kitchen", icon: "kitchen" },
-    { value: "Ac", label: "AC", icon: "ac_unit" },
+    { value: "AC", label: "AC", icon: "ac_unit" },
     {
       value: "Washing Machine",
       label: "Washing Machine",
@@ -84,7 +83,7 @@ const FilterModal = ({ selectedFilters, onFilterChange, onClose }) => {
     },
     { value: "Tv", label: "TV", icon: "tv" },
     { value: "Pool", label: "Pool", icon: "pool" },
-    { value: "Free Parking", label: "Free Parking", icon: "local_parking" },
+    { value: "Parking", label: "Free Parking", icon: "local_parking" },
   ];
 
   const handleClearFilters = () => {
@@ -97,12 +96,12 @@ const FilterModal = ({ selectedFilters, onFilterChange, onClose }) => {
     setAmenities((prevAmenities) =>
       prevAmenities.includes(selectedAmenity)
         ? prevAmenities.filter((item) => item !== selectedAmenity)
-        : [...prevAmenities, selectedAmenity]
+        : [...prevAmenities, selectedAmenity],
     );
   };
   const handlePropertyTypeChange = (selectedType) => {
     setPropertyType((prevType) =>
-      prevType === selectedType ? "" : selectedType
+      prevType === selectedType ? "" : selectedType,
     );
   };
 

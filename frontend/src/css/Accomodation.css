@@ -2,17 +2,34 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 1350px;
+  min-height: calc(100vh - 14rem);
+  width: 100%;
+  padding: 1rem 1rem 4rem;
 }
 
 .add-new-place {
-  padding: 13px;
-  border-radius: 30px;
+  padding: 0.85rem 2rem;
+  border-radius: var(--radius-full);
   border: none;
-  margin-top: 2rem;
-  background-color: #0e8b53;
-  color: white;
+  margin: 1rem 0 2rem;
+  background-color: var(--primary);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(14, 139, 83, 0.28);
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
+
+.add-new-place:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(14, 139, 83, 0.38);
+}
+
 .accom-form-container {
   width: 100%;
   height: 100%;
@@ -32,7 +49,7 @@ form {
   height: 50px;
   padding: 8px;
   border-radius: 10px;
-  border: 1px solid grey;
+  border: 1px solid var(--border-light);
 }
 
 .input-container > input:focus,
@@ -59,7 +76,7 @@ textarea::placeholder {
   height: 50px;
   padding: 8px;
   border-radius: 10px;
-  border: 1px solid grey;
+  border: 1px solid var(--border-light);
 }
 
 .address-fields > input::placeholder {
@@ -73,12 +90,12 @@ textarea::placeholder {
 }
 
 div > .form-labels {
-  color: grey;
+  color: var(--text-secondary);
   font-size: 13px;
 }
 
 div > .form-paras {
-  color: grey;
+  color: var(--text-secondary);
   font-size: 13px;
 }
 .perks {
@@ -98,7 +115,7 @@ div > .form-paras {
   justify-content: flex-start;
   align-items: center;
   border-radius: 10px;
-  border: 1px solid grey;
+  border: 1px solid var(--border-light);
 }
 
 .perks > div input {
@@ -117,7 +134,7 @@ section {
 
 section > input {
   border-radius: 10px;
-  border: 1px solid gray;
+  border: 1px solid var(--border-light);
   padding: 8px;
 }
 section > input::placeholder {
@@ -128,7 +145,7 @@ section > input::placeholder {
   width: 100%;
   border-radius: 10px;
   padding: 7px;
-  background-color: #0e8b53;
+  background-color: var(--primary);
   border: none;
   margin: 1rem auto;
   color: white;
@@ -151,7 +168,7 @@ section > input::placeholder {
 }
 
 .add-button:focus {
-  background-color: #0e8b53;
+  background-color: var(--primary);
   color: white;
   outline: none;
 }
@@ -166,24 +183,25 @@ section > input::placeholder {
   width: 15%;
   border-radius: 10px;
   height: 7rem;
-  object-fit: fill;
+  object-fit: cover;
 }
 
 .image-link {
   height: 50px;
   padding: 8px;
   border-radius: 10px;
-  border: 1px solid grey;
+  border: 1px solid var(--border-light);
 }
 
 .upload {
   width: 11rem;
   height: 7rem;
-  background-color: lightgrey;
+  background-color: #f1f5f9;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
+  border: 1px dashed var(--border-light);
 }
 
 .hidden {
@@ -197,78 +215,114 @@ section > input::placeholder {
   align-items: center;
   width: 100%;
 }
+
 .myaccomodation-container {
   display: flex;
   flex-shrink: 0;
-  height: 12rem;
-  width: 60%;
-  margin: 3%;
-  border-radius: 10px;
+  width: min(56rem, 92%);
+  margin: 1rem auto;
+  border-radius: var(--radius-xl);
   align-items: center;
-  transition: transform 0.5s;
+  transition: all var(--transition-normal);
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  cursor: pointer;
+  color: var(--text-primary);
 }
 
 .myaccomodation-container:hover {
-  box-shadow: 1px 1px 15px rgb(161, 160, 160);
-  transform: scale(1.1);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(14, 139, 83, 0.35);
+  transform: translateY(-3px);
+  text-decoration: none;
 }
 
 .myaccomodation-image-container {
-  height: 12rem;
-  padding: 0px;
-  border-top-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  height: 9.5rem;
+  padding: 0;
+  flex: none;
+  width: 14rem;
+  overflow: hidden;
 }
 
 .myaccomodation-image-container:hover {
   cursor: pointer;
 }
+
 .myaccomodation-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+  transition: transform var(--transition-normal);
+}
+
+.myaccomodation-container:hover .myaccomodation-img {
+  transform: scale(1.05);
 }
 
 .myaccomodation-information {
-  height: 12rem;
-  background-color: rgb(223, 223, 223);
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+  height: 100%;
+  background-color: transparent;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  justify-content: center;
+  padding: 1.25rem 1.5rem;
+  flex: 1;
+}
+
+.myaccomodation-hotel-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
 }
 
 .stay-information {
   display: flex;
   align-items: center;
-  margin: 4px;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin: 0.35rem 0;
 }
+
 .info {
-  display: flex;
-  margin-right: 0.5rem;
-  color: grey;
-  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
 .icon {
-  color: grey;
-  font-size: 20px;
+  color: var(--primary);
+  font-size: 1.1rem;
 }
 
 .myaccomodation-price {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  margin-top: 0.5rem;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary-dark);
 }
+
+.myaccomodation-price .material-symbols-outlined {
+  font-size: 1.25rem;
+  color: var(--primary);
+}
+
 .myaccomodation-city,
 .myaccomodation-guest {
-  color: grey;
-  margin: 0px;
-  padding: 0px;
-  font-size: 15px;
+  color: var(--text-secondary);
+  margin: 0.15rem 0;
+  padding: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 
 .description-label-row {

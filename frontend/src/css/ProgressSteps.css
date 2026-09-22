@@ -1,34 +1,57 @@
 .checkout-progress {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
-  margin-top: 5px;
-  text-decoration: none;
+  align-items: center;
+  margin: 2rem auto 2.5rem;
+  padding: 0.35rem;
+  background: #ffffff;
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
+  gap: 0.35rem;
+  width: fit-content;
+}
+
+.d-flex.justify-content-center.mt-5 {
+  margin-top: 1.5rem !important;
 }
 
 .progress-button {
   text-decoration: none;
-  color: black;
-  padding: 10px 20px;
+  color: var(--text-secondary);
+  padding: 0.65rem 1.4rem;
   border: none;
-  border-radius: 5px;
-  margin-right: 10px;
-  background-color: #ddd;
+  border-radius: var(--radius-full);
+  background-color: transparent;
   cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
 }
 
 .progress-button.active-button {
-  background-color: #0e8b53;
-  color: white;
+  background-color: var(--primary);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 2px 10px rgba(14, 139, 83, 0.28);
 }
+
 .progress-button.active-button:hover {
-  background-color: #0e8b53;
-  color: white;
-  font-weight: 400;
+  background-color: var(--primary-hover);
+  color: #ffffff;
 }
-.progress-button:hover {
+
+.progress-button:not(.active-button):hover {
+  background-color: #f1f5f9;
+  color: var(--text-primary);
   text-decoration: none;
-  background-color: rgba(1, 38, 7, 0.177);
-  border-color: rgb(2, 58, 11);
-  color: rgb(2, 58, 11);
-  font-weight: bold;
+}
+
+.triangle-left,
+.triangle-right {
+  display: none;
 }

@@ -25,7 +25,20 @@ const Accomodation = () => {
         </Link>
         {loading && <LoadingSpinner />}
         {accomodation.length === 0 && !loading && (
-          <p>Accomodation not available</p>
+          <div style={{ textAlign: "center", padding: "2.5rem 1rem" }}>
+            <span
+              className="material-symbols-outlined"
+              style={{ fontSize: "3.5rem", color: "var(--text-muted)", marginBottom: "0.5rem" }}
+            >
+              domain_add
+            </span>
+            <h3 style={{ fontSize: "1.25rem", fontWeight: 700, margin: "0.25rem 0", color: "var(--text-primary)" }}>
+              No places listed yet
+            </h3>
+            <p style={{ color: "var(--text-secondary)", fontSize: "0.95rem" }}>
+              Share your room, apartment, or villa with travelers worldwide.
+            </p>
+          </div>
         )}
         {accomodation.length > 0 && !loading && (
           <MyAccomodation accomodation={accomodation} loading={loading} />

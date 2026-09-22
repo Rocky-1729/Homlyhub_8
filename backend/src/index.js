@@ -28,6 +28,13 @@ const port = process.env.PORT || process.env.Port || 8000;
 app.get("/",(req,res)=>{
     res.send("Hello World");
 });
+
+app.use(
+  cors({
+    origin: process.env.ORIGIN_ACCESS_URL,
+    credentials:true
+  }),
+);
 app.use("/api/v1/rent/user",router);
 app.use("/api/v1/rent/listings",PropertyRouter);
 app.use("/api/v1/rent/user/booking", bookingRouter);

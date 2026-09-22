@@ -1,25 +1,27 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+/* ==========================================================================
+   HomelyHub - Authentication (Login & Signup) Styles
+   ========================================================================== */
 
 .wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0;
-  padding: 3rem 1rem 4rem 1rem;
-  min-height: calc(100vh - 5.75rem);
-  font-family: "Poppins", sans-serif;
+  padding: 3.5rem 1rem 5rem;
+  min-height: calc(100vh - 5rem);
+  font-family: inherit;
   width: 100%;
-  background: linear-gradient(180deg, #eef7f1 0%, #f6fbf8 100%);
+  background-color: var(--bg-main);
 }
 
 .wrapper form {
   width: 100%;
-  max-width: 26rem;
+  max-width: 28rem;
   background: #ffffff;
-  padding: 2.5rem 2.25rem;
-  border-radius: 20px;
-  border-top: 4px solid #0e8b53;
-  box-shadow: 0 8px 28px rgba(14, 139, 83, 0.14);
+  padding: 3rem 2.5rem;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-lg);
   margin-bottom: 0;
 }
 
@@ -27,67 +29,75 @@
   text-align: center;
   font-size: 1.75rem;
   font-weight: 700;
-  color: #14432c;
-  margin-bottom: 1.75rem;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+  letter-spacing: -0.02em;
 }
 
 .wrapper .form-group {
-  margin-bottom: 1.1rem;
+  margin-bottom: 1.25rem;
 }
 
 .wrapper label {
   display: block;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #14432c;
-  margin-bottom: 0.35rem;
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
 }
 
 .wrapper .form-control {
   width: 100%;
-  height: 2.75rem;
-  padding: 0 0.9rem;
-  font-size: 0.9rem;
-  border: 1px solid #d9ebe1;
-  border-radius: 10px;
-  background: #fbfefc;
-  transition: all 0.2s ease;
+  height: 2.85rem;
+  padding: 0 1rem;
+  font-size: 0.925rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  background: #f8fafc;
+  transition: all var(--transition-fast);
 }
 
 .wrapper .form-control:focus {
   outline: none;
-  border-color: #0e8b53;
+  border-color: var(--primary);
   background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(14, 139, 83, 0.15);
+  box-shadow: 0 0 0 3px var(--primary-glow);
 }
 
 .wrapper form .loginbutton {
   width: 100%;
-  background-color: #0e8b53;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
   border: none;
-  color: white;
+  color: #ffffff;
   font-weight: 600;
-  letter-spacing: 0.04em;
-  margin-top: 1.5rem;
-  box-shadow: 0 4px 12px rgba(14, 139, 83, 0.3);
-  border-radius: 12px;
-  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  margin-top: 1.75rem;
+  padding: 0.85rem 1rem;
+  box-shadow: 0 4px 14px rgba(14, 139, 83, 0.3);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  cursor: pointer;
 }
 
 .wrapper form .loginbutton:hover {
-  background-color: #0a6e41;
+  background: var(--primary-hover);
   color: #ffffff;
-  box-shadow: 0 6px 16px rgba(14, 139, 83, 0.4);
+  box-shadow: 0 6px 18px rgba(14, 139, 83, 0.4);
   transform: translateY(-1px);
 }
 
 .wrapper form a {
   font-size: 0.85rem;
-  color: #0e8b53;
+  color: var(--primary);
   text-decoration: none;
   font-weight: 500;
+  transition: color var(--transition-fast);
 }
 
 .wrapper form a:hover {
+  color: var(--primary-hover);
   text-decoration: underline;
 }

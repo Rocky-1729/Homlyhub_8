@@ -36,7 +36,7 @@ const PropertyList = () => {
   const [currentPage, setCurrentPage] = useState({ page: 1 });
 
   const dispatch = useDispatch();
-  const { properties, totalProperties } = useSelector(
+  const { properties, totalProperties, searchParams } = useSelector(
     (state) => state.properties,
   );
 
@@ -46,11 +46,14 @@ const PropertyList = () => {
 
   useEffect(() => {
     const fetchProperties = async (page) => {
-      dispatch(propertyActions.updateSearchParams({ page }));
+      if (searchParams.page !== page) {
+        dispatch(propertyActions.updateSearchParams({ ...searchParams, page }));
+        return;
+      }
       await dispatch(getAllProperties());
     };
     fetchProperties(currentPage.page);
-  }, [currentPage.page, dispatch]);
+  }, [currentPage.page, dispatch, searchParams]);
 
   useEffect(() => {
     if (propertyListRef.current) {
@@ -71,7 +74,34 @@ const PropertyList = () => {
   return (
     <>
       {properties.length === 0 ? (
-        <p className={"not_found"}>Property not found</p>
+        <div
+          className="not_found"
+          style={{ textAlign: "center", padding: "4rem 1rem" }}
+        >
+          <span
+            className="material-symbols-outlined"
+            style={{
+              fontSize: "3.5rem",
+              color: "var(--text-muted)",
+              marginBottom: "0.5rem",
+            }}
+          >
+            travel_explore
+          </span>
+          <h3
+            style={{
+              fontSize: "1.25rem",
+              fontWeight: 700,
+              margin: "0.5rem 0",
+              color: "var(--text-primary)",
+            }}
+          >
+            No properties found
+          </h3>
+          <p style={{ color: "var(--text-secondary)", fontSize: "0.95rem" }}>
+            Try adjusting your search filters or dates to find available stays.
+          </p>
+        </div>
       ) : (
         <div className="propertylist" ref={propertyListRef}>
           {properties.map((property) => (
