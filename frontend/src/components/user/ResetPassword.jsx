@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "@tanstack/react-form";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { resetPassword } from "../../store/User/user-action";
+import { resetPassword } from "../../store/User/User-action.js";
 import toast from "react-hot-toast";
 
 const ResetPassword = () => {
@@ -24,7 +24,6 @@ const ResetPassword = () => {
 
   return (
     <>
-
       <div className="row wrapper">
         <div className="col-10 col-lg-5">
           <form

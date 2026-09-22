@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "../../css/ForgetPassword.css";
 import { Field, useForm } from "@tanstack/react-form";
 import { useDispatch, useSelector } from "react-redux";
-import { forgotPassword } from "../../store/User/user-action";
+import { forgotPassword } from "../../store/User/User-action.js";
 import toast from "react-hot-toast";
 
 const ForgetPassword = () => {
@@ -54,7 +54,6 @@ const ForgetPassword = () => {
               id="forgot_password_button"
               type="submit"
               className="btn-block py-3 password-btn"
-
             >
               Send Email
             </button>

@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import "../../css/Profile.css";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "../../store/User/user-action";
+import { updateUser } from "../../store/User/User-action.js";
 import { useForm } from "@tanstack/react-form";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";

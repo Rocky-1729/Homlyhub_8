@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { updatePassword } from "../../store/User/user-action";
+import { updatePassword } from "../../store/User/User-action.js";
 import toast from "react-hot-toast";
 import { userActions } from "../../store/User/user-slice";
 
@@ -38,7 +38,6 @@ const UpdatePassword = () => {
 
   return (
     <>
-
       <div className="row wrapper">
         <div className="col-10 col-lg-5 updateprofile">
           <form onSubmit={submitHandler}>
@@ -78,11 +77,7 @@ const UpdatePassword = () => {
               />
             </div>
 
-            <button
-              type="submit"
-              className="btn-block py-3 password-btn"
-
-            >
+            <button type="submit" className="btn-block py-3 password-btn">
               Update Password
             </button>
           </form>
