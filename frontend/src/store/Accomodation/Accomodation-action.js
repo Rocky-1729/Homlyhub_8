@@ -16,11 +16,12 @@ export const createAccomodation = (accomodationData) => async (dispatch) => {
 
     return response.data;
   } catch (error) {
-    dispatch(
-      accomodationActions.getErrors(
-        error.response?.data?.message || error.message
-      )
-    );
+    const message =
+      error.response?.data?.message ||
+      error.response?.data?.error ||
+      error.message ||
+      "Failed to create accommodation";
+    dispatch(accomodationActions.getErrors(message));
 
     throw error;
   }
@@ -40,11 +41,12 @@ export const getAllAccomodation = () => async (dispatch) => {
 
     return accom;
   } catch (error) {
-    dispatch(
-      accomodationActions.getErrors(
-        error.response?.data?.message || error.message
-      )
-    );
+    const message =
+      error.response?.data?.message ||
+      error.response?.data?.error ||
+      error.message ||
+      "Failed to fetch accommodations";
+    dispatch(accomodationActions.getErrors(message));
 
     throw error;
   }

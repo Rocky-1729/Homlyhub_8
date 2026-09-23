@@ -5,6 +5,7 @@ import "../../css/Home.css";
 import { useDispatch, useSelector } from "react-redux";
 import { propertyActions } from "../../store/property/property-slice";
 import { getAllProperties } from "../../store/property/property-action";
+import LoadingSpinner from "../LoadingSpinner";
 
 const Card = ({ id, image, name, address, price }) => {
   return (
@@ -36,7 +37,7 @@ const PropertyList = () => {
   const [currentPage, setCurrentPage] = useState({ page: 1 });
 
   const dispatch = useDispatch();
-  const { properties, totalProperties, searchParams } = useSelector(
+  const { properties, totalProperties, searchParams, loading, error } = useSelector(
     (state) => state.properties,
   );
 
@@ -73,7 +74,75 @@ const PropertyList = () => {
 
   return (
     <>
-      {properties.length === 0 ? (
+      {loading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "300px",
+            flexDirection: "column",
+            gap: "1rem",
+            padding: "3rem 1rem",
+          }}
+        >
+          <LoadingSpinner />
+          <p style={{ color: "var(--text-secondary)", fontSize: "0.95rem" }}>
+            Loading properties...
+          </p>
+        </div>
+      ) : error ? (
+        <div
+          className="not_found"
+          style={{ textAlign: "center", padding: "4rem 1rem" }}
+        >
+          <span
+            className="material-symbols-outlined"
+            style={{
+              fontSize: "3.5rem",
+              color: "#e53e3e",
+              marginBottom: "0.5rem",
+            }}
+          >
+            cloud_off
+          </span>
+          <h3
+            style={{
+              fontSize: "1.25rem",
+              fontWeight: 700,
+              margin: "0.5rem 0",
+              color: "var(--text-primary)",
+            }}
+          >
+            Server connection issue
+          </h3>
+          <p
+            style={{
+              color: "var(--text-secondary)",
+              fontSize: "0.95rem",
+              maxWidth: "460px",
+              margin: "0 auto 1.5rem",
+            }}
+          >
+            {error}
+          </p>
+          <button
+            onClick={() => dispatch(getAllProperties())}
+            style={{
+              padding: "0.6rem 1.6rem",
+              background: "#ff385c",
+              color: "#fff",
+              border: "none",
+              borderRadius: "8px",
+              cursor: "pointer",
+              fontWeight: 600,
+              fontSize: "0.95rem",
+            }}
+          >
+            Retry
+          </button>
+        </div>
+      ) : properties.length === 0 ? (
         <div
           className="not_found"
           style={{ textAlign: "center", padding: "4rem 1rem" }}
@@ -108,7 +177,7 @@ const PropertyList = () => {
             <Card
               key={property._id}
               id={property._id}
-              image={property.images[0].url}
+              image={property.images[0]?.url || ""}
               name={property.propertyName}
               address={`${property.address.city}, ${property.address.state} ${property.address.pincode}`}
               price={property.price}
@@ -118,23 +187,25 @@ const PropertyList = () => {
         </div>
       )}
 
-      <div className="pagination">
-        <button
-          className="previous_btn"
-          onClick={() => setCurrentPage((prev) => ({ page: prev.page - 1 }))}
-          disabled={currentPage.page === 1}
-        >
-          <span className="material-symbols-outlined">arrow_back_ios_new</span>
-        </button>
+      {!loading && !error && properties.length > 0 && (
+        <div className="pagination">
+          <button
+            className="previous_btn"
+            onClick={() => setCurrentPage((prev) => ({ page: prev.page - 1 }))}
+            disabled={currentPage.page === 1}
+          >
+            <span className="material-symbols-outlined">arrow_back_ios_new</span>
+          </button>
 
-        <button
-          className="next_btn"
-          onClick={() => setCurrentPage((prev) => ({ page: prev.page + 1 }))}
-          disabled={properties.length < 12 || currentPage.page === lastPage}
-        >
-          <span className="material-symbols-outlined">arrow_forward_ios</span>
-        </button>
-      </div>
+          <button
+            className="next_btn"
+            onClick={() => setCurrentPage((prev) => ({ page: prev.page + 1 }))}
+            disabled={properties.length < 12 || currentPage.page === lastPage}
+          >
+            <span className="material-symbols-outlined">arrow_forward_ios</span>
+          </button>
+        </div>
+      )}
     </>
   );
 };

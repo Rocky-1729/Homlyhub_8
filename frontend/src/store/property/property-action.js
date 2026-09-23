@@ -15,20 +15,31 @@ import { axiosInstance } from "../../utils/axios";
 export const getAllProperties = () => async (dispatch, getState) => {
   dispatch(propertyActions.getPropertiesStart());
   try {
-    console.log("API call Started");
     const { searchParams } = getState().properties;
-    console.log(searchParams);
 
-    const response = await axiosInstance.get(`/v1/rent/listings`, {
-      params: { ...searchParams },
-    });
+    let response;
+    try {
+      response = await axiosInstance.get(`/v1/rent/listings`, {
+        params: { ...searchParams },
+      });
+    } catch (err) {
+      // If 504 Gateway Timeout (e.g. Render waking up) or connection error, retry once
+      if (err.response?.status === 504 || err.code === "ECONNABORTED" || !err.response) {
+        console.warn("Backend server may be waking up from sleep. Retrying in 4 seconds...");
+        await new Promise((resolve) => setTimeout(resolve, 4000));
+        response = await axiosInstance.get(`/v1/rent/listings`, {
+          params: { ...searchParams },
+        });
+      } else {
+        throw err;
+      }
+    }
 
     if (!response) {
       throw new Error("could not fetch any properties");
     }
 
     const { data } = response.data;
-    console.log(data);
 
     dispatch(
       propertyActions.getProperties({
@@ -37,6 +48,10 @@ export const getAllProperties = () => async (dispatch, getState) => {
       }),
     );
   } catch (error) {
-    dispatch(propertyActions.getErrors(error.message));
+    const message =
+      error.response?.status === 504
+        ? "Backend server is waking up from sleep. Please wait a moment and retry."
+        : error.message || "Failed to load properties";
+    dispatch(propertyActions.getErrors(message));
   }
 };

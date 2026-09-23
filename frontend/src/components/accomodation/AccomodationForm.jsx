@@ -33,9 +33,9 @@ const AccomodationForm = () => {
     defaultValues: {
       name: "",
       description: "",
-      propertyType: undefined,
-      roomType: undefined,
-      extraInfo: undefined,
+      propertyType: "House",
+      roomType: "Entire Home",
+      extraInfo: "",
       images: [],
       amenities: [],
       address: {
@@ -44,29 +44,42 @@ const AccomodationForm = () => {
         state: "",
         pincode: "",
       },
-      checkIn: undefined,
-      checkOut: undefined,
-      maximumGuest: 0,
+      checkIn: "12:00",
+      checkOut: "11:00",
+      maximumGuest: 2,
       price: "",
     },
     onSubmit: async ({ value }) => {
       try {
-        console.log(value);
+        if (!value.name || !value.description) {
+          toast.error("Please provide a title and description.");
+          return;
+        }
+
+        if (!value.images || value.images.length === 0) {
+          toast.error("Please upload at least 1 photo for your accommodation.");
+          return;
+        }
+
+        if (!value.address?.city || !value.address?.area) {
+          toast.error("Please fill in your accommodation's address.");
+          return;
+        }
 
         await dispatch(
           createAccomodation({
             propertyName: value.name,
             description: value.description,
-            propertyType: value.propertyType,
-            roomType: value.roomType,
+            propertyType: value.propertyType || "House",
+            roomType: value.roomType || "Entire Home",
             extraInfo: value.extraInfo,
             images: value.images,
             address: value.address,
-            amenities: value.amenities,
-            checkInTime: value.checkIn,
-            checkOutTime: value.checkOut,
-            maximumGuest: value.maximumGuest,
-            price: value.price,
+            amenities: value.amenities || [],
+            checkInTime: value.checkIn || "12:00 PM",
+            checkOutTime: value.checkOut || "11:00 AM",
+            maximumGuest: Number(value.maximumGuest) || 2,
+            price: Number(value.price) || 1000,
           }),
         );
 
@@ -79,8 +92,7 @@ const AccomodationForm = () => {
         navigate("/accomodation");
       } catch (error) {
         toast.error(error.response?.data?.message || error.message);
-
-        console.error(error);
+        console.error("Failed to create accommodation:", error);
       }
     },
   });

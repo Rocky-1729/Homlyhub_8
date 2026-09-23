@@ -51,15 +51,13 @@ const getProperty = async (req, res) => {
 };
 
 // CREATE A PROPERTY - an owner adds his house
-
 // take the details, upload every photo to ImageKit,
 // keep only the links, then save the house with the owner's
 // id attached.
 // This route has protect on it, so req.user already exists.
 const createProperty = async (req, res) => {
   try {
-    // Take the fields out of the body one by one. This is the
-    // same idea as filterObj - we decide what we accept.
+    // Take the fields out of the body one by one.
     const {
       propertyName,
       description,
@@ -74,47 +72,84 @@ const createProperty = async (req, res) => {
       price,
       images,
     } = req.body;
-    // an empty list, we will fill it as each photo goes up
+
+    if (!propertyName || !description) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Property name and description are required.",
+      });
+    }
+
+    if (!images || !Array.isArray(images) || images.length === 0) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Please upload at least 1 image for your property.",
+      });
+    }
+
     const uploadedImages = [];
 
-    // Go through the photos one at a time. Each one is sent to
-    // ImageKit, which stores the file and hands back a url and
-    // an id. The photo itself never enters our database.
-    // await inside the loop = wait for this photo, then next.
+    // Go through photos one by one.
     for (const image of images) {
-      const result = await imagekit.upload({
-        file: image.url,
-        fileName: `property_${Date.now()}.jpg`,
-        folder: "property_images",
-      });
+      if (!image || !image.url) continue;
 
-      uploadedImages.push({ url: result.url, public_id: result.fileId });
+      if (image.url.startsWith("data:")) {
+        // Base64 file upload
+        const result = await imagekit.upload({
+          file: image.url,
+          fileName: `property_${Date.now()}_${Math.random().toString(36).substring(7)}.jpg`,
+          folder: "property_images",
+        });
+        uploadedImages.push({ url: result.url, public_id: result.fileId });
+      } else {
+        // Direct URL link
+        try {
+          const result = await imagekit.upload({
+            file: image.url,
+            fileName: `property_${Date.now()}_${Math.random().toString(36).substring(7)}.jpg`,
+            folder: "property_images",
+          });
+          uploadedImages.push({ url: result.url, public_id: result.fileId });
+        } catch (uploadErr) {
+          console.warn(
+            "ImageKit direct upload failed, preserving original URL:",
+            uploadErr.message,
+          );
+          uploadedImages.push({
+            url: image.url,
+            public_id: image.public_id || `img_${Date.now()}`,
+          });
+        }
+      }
     }
-    // Now save the house. Notice images: uploadedImages - the
-    // LINKS, not the photos.
+
+    if (uploadedImages.length === 0) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Unable to process uploaded images. Please try again.",
+      });
+    }
+
     const property = await Property.create({
       propertyName,
       description,
-      propertyType,
-      roomType,
+      propertyType: propertyType || "House",
+      roomType: roomType || "Room",
       extraInfo,
-      address,
-      amenities,
-      checkInTime,
-      checkOutTime,
-      maximumGuest,
-      price,
+      address: address || {},
+      amenities: amenities || [],
+      checkInTime: checkInTime || "12:00 PM",
+      checkOutTime: checkOutTime || "11:00 AM",
+      maximumGuest: Number(maximumGuest) || 2,
+      price: Number(price) || 1000,
       images: uploadedImages,
-      // The owner comes from the token, NOT from req.body.
-      // If we trusted the body, anyone could add a house under
-      // someone else's name.
-      userId: req.user.id,
+      userId: req.user._id || req.user.id,
     });
 
-    res.status(200).json({ status: "success", data: { data: property } });
+    res.status(201).json({ status: "success", data: { data: property } });
   } catch (error) {
-    console.error("Error searching properties", error);
-    res.status(404).json({ status: "fail", message: error.message });
+    console.error("Error creating property:", error);
+    res.status(400).json({ status: "fail", message: error.message });
   }
 };
 
@@ -122,17 +157,14 @@ const createProperty = async (req, res) => {
 // find every house whose userId is me.
 const getUsersProperties = async (req, res) => {
   try {
-    // again from the token, so a user can only ever see his own
-    const userId = req.user._id;
-    // find (not findById) because he may own many houses.
-    // { userId } is short for { userId: userId }.
+    const userId = req.user._id || req.user.id;
     const property = await Property.find({ userId });
     res.status(200).json({
       status: "success",
       data: property,
     });
   } catch (error) {
-    res.status(404).json({ status: "fail", message: error.message });
+    res.status(500).json({ status: "fail", message: error.message });
   }
 };
 

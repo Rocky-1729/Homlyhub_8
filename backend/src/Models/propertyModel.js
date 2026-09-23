@@ -21,8 +21,17 @@ const propertySchema = new mongoose.Schema({
   },
   roomType: {
     type: String,
-    enum: ["Single", "Double", "Triple", "entire"],
-    default: "Single",
+    enum: [
+      "Room",
+      "Entire Home",
+      "Entire home",
+      "Anytype",
+      "Single",
+      "Double",
+      "Triple",
+      "entire",
+    ],
+    default: "Room",
   },
   maximumGuest: {
     type: Number,
@@ -39,10 +48,13 @@ const propertySchema = new mongoose.Schema({
           "TV",
           "Tv",
           "AC",
+          "Ac",
           "Heater",
           "Kitchen",
           "Parking",
+          "Free Parking",
           "Pool",
+          "Washing Machine",
         ],
       },
       icon: {
@@ -61,10 +73,12 @@ const propertySchema = new mongoose.Schema({
         },
       },
     ],
-    validate: function (arr) {
-      return arr.length >= 6;
+    validate: {
+      validator: function (arr) {
+        return Array.isArray(arr) && arr.length >= 1;
+      },
+      message: "Please enter at least 1 image for the property",
     },
-    message: "Please enter at least 6 images for the property",
   },
   price: {
     type: Number,
@@ -104,11 +118,12 @@ const propertySchema = new mongoose.Schema({
   checkOutTime: { type: String, default: "11:00 AM" },
 });
 propertySchema.pre("save", function (next) {
-  this.slug = slugify(this.propertyName, { lower: true });
-  next();
-});
-propertySchema.pre("save", function (next) {
-  this.address.city = this.address.city.toLowerCase().replaceAll(" ", "");
+  if (this.propertyName) {
+    this.slug = slugify(this.propertyName, { lower: true });
+  }
+  if (this.address && this.address.city) {
+    this.address.city = this.address.city.toLowerCase().replaceAll(" ", "");
+  }
   next();
 });
 const Property =
